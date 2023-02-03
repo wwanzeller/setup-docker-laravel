@@ -1,5 +1,5 @@
 # Setup Docker Para Projetos Laravel:
-[Wenderson Wanzeller](https://www.linkedin.com/in/wenderson-wanzeller/)
+Por [Wenderson Wanzeller](https://www.linkedin.com/in/wenderson-wanzeller/)
 
 ### Passo a passo:
 Clone o repositório de setup:
