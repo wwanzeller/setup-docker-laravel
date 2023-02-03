@@ -1,32 +1,35 @@
-
-# Setup Docker Para Projetos Laravel (8 ou 9)
+# Setup Docker Para Projetos Laravel:
 [Wenderson Wanzeller](https://www.linkedin.com/in/wenderson-wanzeller/)
 
-### Passo a passo
-Clone Repositório
+### Passo a passo:
+Clone o repositório de setup:
 ```sh
 git clone https://github.com/wwanzeller/setup-docker-laravel.git
 ```
 
-Clone os Arquivos do Laravel
+Clone o repositório Laravel:
 ```sh
 git clone https://github.com/laravel/laravel.git app-laravel
 ```
 
-Copie os arquivos docker-compose.yml, Dockerfile e o diretório docker/ para o seu projeto
+Copie os ficheiros docker-compose.yml, Dockerfile e o diretório docker/ para o seu projeto Laravel:
 ```sh
 cp -rf setup-docker-laravel/* app-laravel/
 ```
 ```sh
 cd app-laravel/
 ```
-
-Crie o Arquivo .env
+Remova o versionamento do repositório Laravel:
+```sh
+rm -rf .git/
+```
+Crie as variáveis de ambiente .env no Laravel:
 ```sh
 cp .env.example .env
 ```
+Atualize as variáveis de ambiente no ficheiro (.env) do Laravel conforme exemplo do repositório de setup (
+.env.setup)
 
-Atualize as variáveis de ambiente do arquivo .env
 ```dosini
 APP_NAME="Sua Aplicação"
 APP_URL=http://localhost
@@ -48,25 +51,25 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 ```
 
-Suba os containers do projeto
+Suba os containers do projeto:
 ```sh
 docker-compose up -d
 ```
 
-Acessar o container
+Acesse o container:
 ```sh
 docker-compose exec app bash
 ```
 
-Instalar as dependências do projeto
+Instale as dependências do projeto:
 ```sh
 composer install
 ```
 
-Gerar a key do projeto Laravel
+Gere a key do projeto Laravel:
 ```sh
 php artisan key:generate
 ```
 
-Acessar o projeto
+Acesse o projeto:
 [http://localhost](http://localhost)
