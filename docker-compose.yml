@@ -1,0 +1,87 @@
+version: "3.8"
+
+services:
+    app:
+        container_name: laravel
+        build:
+            context: .
+            args:
+                USER: wenderson
+            dockerfile: Dockerfile
+        image: wwanzeller/php-laravel
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        depends_on: 
+            - redis
+            - nginx
+            - mysql
+        networks: 
+            - laravel
+    
+    nginx:
+        container_name: laravel-nginx
+        image: nginx:alpine
+        restart: unless-stopped
+        expose: 
+            - 80
+        ports: 
+            - "80:80"
+        volumes: 
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks: 
+            - laravel
+
+    mysql:
+        container_name: laravel-mysql
+        image: mysql:latest
+        restart: unless-stopped
+        environment: 
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+        volumes: 
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        expose: 
+            - 3388
+        ports: 
+            - "3388:3306"
+        networks: 
+            - laravel
+
+    queue:
+        image: wwanzeller/php-laravel
+        restart: unless-stopped
+        command: "php artisan queue:work"
+        volumes: 
+            - ./:/var/www
+        depends_on: 
+            - redis
+            - app
+        networks: 
+            - laravel
+
+    redis:
+        image: redis:latest
+        networks: 
+            - laravel
+    
+    phpmyadmin:
+        container_name: laravel-phpmyadmin
+        image: phpmyadmin:latest
+        restart: unless-stopped
+        expose:
+            - 8080
+        ports:
+            - 8080:80
+        environment:
+            - PMA_ARBITRARY=1
+        networks:
+            - laravel
+
+networks: 
+    laravel:
+        driver: bridge
