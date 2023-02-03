@@ -28,7 +28,7 @@ Crie as variáveis de ambiente .env no Laravel:
 cp .env.example .env
 ```
 Atualize as variáveis de ambiente no ficheiro (.env) do Laravel conforme exemplo do repositório de setup (
-.env.setup)
+env.setup.txt)
 
 ```dosini
 APP_NAME="Sua Aplicação"
