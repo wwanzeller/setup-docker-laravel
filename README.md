@@ -20,7 +20,10 @@ cp -rf setup-docker-laravel/* app-laravel/
 ```sh
 cd app-laravel/
 ```
-
+Remova o versionamento
+```sh
+rm -rf .git/
+```
 Crie o Arquivo .env
 ```sh
 cp .env.example .env
